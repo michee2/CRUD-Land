@@ -14,15 +14,15 @@ return new class extends Migration
     public function up()
     {
         Schema::create('lands', function (Blueprint $table) {
-            $table->id();
+            $table->increments("id");
             $table->string("Libelle")->nullable();
             $table->text("description");
-            $table->integer("code_indicatif");
-            $table->string("Continent");
-            $table->string("population");
+            $table->integer("code_indicatif")->unique();
+            $table->enum("Continent", ["Amérique", "Europe", "Asie", "Afrique", "Océanie", "Antarctique"]);
+            $table->integer("population");
             $table->string("capitale");
-            $table->string("monnaie");
-            $table->string("langue");
+            $table->enum("monnaie", ["XOF", "EUR", "DOLLAR"]);
+            $table->enum("langue", ["FR", "EN", "AR", "ES"]);
             $table->integer("Superficie");
             $table->boolean("est_laique")->default(true);
             $table->timestamps();
