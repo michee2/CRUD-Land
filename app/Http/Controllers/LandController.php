@@ -1,9 +1,15 @@
 <?php
 
+//LandCon.php
+
 namespace App\Http\Controllers;
 
 use App\Models\Land;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Validator;
+
+
 
 class LandController extends Controller
 {
@@ -14,7 +20,7 @@ class LandController extends Controller
      */
     public function index()
     {
-        //
+        return view("list",["lands"=>Land::all()]);
     }
 
     /**
@@ -24,7 +30,7 @@ class LandController extends Controller
      */
     public function create()
     {
-        //
+        return view('add');
     }
 
     /**
@@ -35,16 +41,53 @@ class LandController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //Validation du formulaire
+        $validator = Validator::make($request->all(), [
+            'capitale' => 'required',
+            'Libelle' => 'required',
+            'code_indicatif' => 'required | integer | unique:lands',
+            'population' => 'required | integer',
+            'Superficie' => 'required | integer',
+            'Continent' => 'required',
+            'monnaie' => 'required',
+            'langue' => 'required',
+            'est_laique' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'hasError' => true,
+                'message' => 'Une erreur est survenu lors du traitement',
+                'data' => $validator->errors()->all()]);
+        }
+
+         //Enregistrement de land dans la bd
+
+         $description = Str::random(16);
+
+        Land::create([
+            "Libelle" => $request->get('Libelle'),
+            "description" => $description,
+            "code_indicatif" => $request->get('code_indicatif'),
+            "Continent" => $request->get('Continent'),
+            "population" => $request->get('population'),
+            "capitale"=> $request->get('capitale'),
+            "monnaie" => $request->get('monnaie'),
+            "langue" => $request->get('langue'),
+            "Superficie" => $request->get('Superficie'),
+            "est_laique" => $request->get('est_laique')
+        ]);
+
+        return redirect()->route('list');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Land  $land
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Land $land)
+    public function show()
     {
         //
     }
@@ -52,34 +95,54 @@ class LandController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Land  $land
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Land $land)
+    public function edit($id)
     {
-        //
+        //$lands=Land::all();
+        $land=Land::FindOrFail($id);
+        return view("update", ["land"=>$land]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Land  $land
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Land $land)
+
+    public function update(Request $request, $id)
     {
-        //
+        $validatedData = $request->validate([
+            'capitale' => 'required',
+            'Libelle' => 'required',
+            'code_indicatif' => 'required | integer | unique:lands',
+            'population' => 'required | integer',
+            'Superficie' => 'required | integer',
+            'Continent' => 'required',
+            'monnaie' => 'required',
+            'langue' => 'required',
+            'est_laique' => 'required',
+        ]);
+
+        Land::whereId($id)->update($validatedData);
+
+        return redirect()->route('list');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Land  $land
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Land $land)
+    public function destroy($id)
     {
-        //
+        $land = Land::findOrFail($id);
+        $land->delete();
+
+        return redirect()->route('list');
     }
 }

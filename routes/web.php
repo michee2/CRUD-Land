@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Models\Land;
+use App\Http\Controllers\LandController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +15,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('layouts/main');
-});
+Route::view('/', 'index');
+
+Route::get('/lists', [LandController::class, 'index'])->name('list');
+
+Route::get('/add', [LandController::class, 'create'])->name('add');
+
+Route::post('/list', [LandController::class, 'store'])->name('users.store');
+
+Route::get('/lands/{id}/edit', [LandController::class, 'edit'])->name('users.edit');
+
+Route::post('/lands/{id}/update', [LandController::class, 'update'])->name('lands.update');
+
+Route::get('/lands/{id}/destroy', [LandController::class, 'destroy'])->name('lands.destroy');
