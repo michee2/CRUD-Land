@@ -5,7 +5,7 @@
     <!-- jquery validation -->
     <div class="card card-primary">
       <div class="card-header">
-        <h3 class="card-title">MODIFIER</h3>
+        <h3 class="card-title">MODIFIER LES INFORMATIONS D'UN PAYS</h3>
       </div>
       <!-- /.card-header -->
       <!-- form start -->
@@ -17,7 +17,7 @@
                 @endforeach
             </ul>
         </div>
-    @endif
+      @endif
       <form id="quickForm" method="POST" action="{{route('lands.update',$land->id)}}">
         @csrf <!--Pour la sécurité sur le web-->
         @method('POST')
@@ -32,7 +32,7 @@
             </div>
             <div class="form-group">
                 <label for="exampleInputEmail1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Code indicatif</font></font></label>
-                <input name="code_indicatif" value="{{$land->code_indicatif}}" type="number" class="form-control" id="exampleInputEmail1" placeholder="Entrez le code indicatif du pays">
+                <input name="code_indicatif" value="{{$land->code_indicatif}}" type="number" min=1 class="form-control" id="exampleInputEmail1" placeholder="Entrez le code indicatif du pays">
             </div>
             <div class="form-group">
                 <label for="exampleInputEmail1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Population</font></font></label>
@@ -40,7 +40,7 @@
             </div>
             <div class="form-group">
                 <label for="exampleInputEmail1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Superficie</font></font></label>
-                <input name="Superficie" value="{{$land->Superficie}}" type="number" class="form-control" id="exampleInputEmail1" placeholder="Entrez la superficie du pays">
+                <input name="Superficie" value="{{$land->Superficie}}" type="number" min=1 class="form-control" id="exampleInputEmail1" placeholder="Entrez la superficie du pays">
             </div>
             <div class="form-group" data-select2-id="29">
                 <label>Continent</label>
@@ -81,6 +81,9 @@
         <!-- /.card-body -->
         <div class="card-footer">
           <button type="submit" class="btn btn-primary">Modifier</button>
+          <button type="submit" class="btn btn-primary" style="position:absolute; right:20px;">
+            <a href="{{route('list')}}" style="color:white;">Retour</a>
+          </button>
         </div>
       </form>
     </div>

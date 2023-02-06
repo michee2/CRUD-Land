@@ -42,7 +42,7 @@ class LandController extends Controller
     public function store(Request $request)
     {
         //Validation du formulaire
-        $validator = Validator::make($request->all(), [
+       $validatedData = $request->validate([
             'capitale' => 'required',
             'Libelle' => 'required',
             'code_indicatif' => 'required | integer | unique:lands',
@@ -53,13 +53,6 @@ class LandController extends Controller
             'langue' => 'required',
             'est_laique' => 'required',
         ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'hasError' => true,
-                'message' => 'Une erreur est survenu lors du traitement',
-                'data' => $validator->errors()->all()]);
-        }
 
          //Enregistrement de land dans la bd
 

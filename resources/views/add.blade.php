@@ -10,6 +10,15 @@
       <!-- /.card-header -->
 
       <!-- form start -->
+      @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+      @endif
       <form id="quickForm" method="POST" action="{{route('users.store')}}">
         @csrf <!--Pour la sécurité sur le web-->
         @method('POST')
@@ -24,19 +33,19 @@
             </div>
             <div class="form-group">
                 <label for="exampleInputEmail1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Code indicatif</font></font></label>
-                <input name="code_indicatif" value="{{old('capitale')}}" type="number" class="form-control" id="exampleInputEmail1" placeholder="Entrez le code indicatif du pays">
+                <input name="code_indicatif" value="{{old('code_indicatif')}}" type="number" min=1 class="form-control" id="exampleInputEmail1" placeholder="Entrez le code indicatif du pays">
             </div>
             <div class="form-group">
                 <label for="exampleInputEmail1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Population</font></font></label>
-                <input name="population" value="{{old('capitale')}}" type="text" class="form-control" id="exampleInputEmail1" placeholder="Entrez le nombre d'habitants du pays">
+                <input name="population" value="{{old('population')}}" type="text" class="form-control" id="exampleInputEmail1" placeholder="Entrez le nombre d'habitants du pays">
             </div>
             <div class="form-group">
                 <label for="exampleInputEmail1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Superficie</font></font></label>
-                <input name="Superficie" value="{{old('capitale')}}" type="number" class="form-control" id="exampleInputEmail1" placeholder="Entrez la superficie du pays">
+                <input name="Superficie" value="{{old('Superficie')}}" type="number" min=1 class="form-control" id="exampleInputEmail1" placeholder="Entrez la superficie du pays">
             </div>
             <div class="form-group" data-select2-id="29">
                 <label>Continent</label>
-                <select name="Continent" value="{{old('capitale')}}" class="form-control select2 select2-hidden-accessible" style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true">
+                <select name="Continent" value="{{old('Continent')}}" class="form-control select2 select2-hidden-accessible" style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true">
                   <option selected="selected" data-select2-id="3">Afrique</option>
                   <option data-select2-id="35">Amérique</option>
                   <option data-select2-id="36">Europe</option>
@@ -47,7 +56,7 @@
             </div>
             <div class="form-group" data-select2-id="29">
                 <label>Monnaie</label>
-                <select name="monnaie" value="{{old('capitale')}}" class="form-control select2 select2-hidden-accessible" style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true">
+                <select name="monnaie" value="{{old('monnaie')}}" class="form-control select2 select2-hidden-accessible" style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true">
                   <option selected="selected" data-select2-id="3">XOF</option>
                   <option data-select2-id="35">EUR</option>
                   <option data-select2-id="36">DOLLAR</option>
@@ -55,7 +64,7 @@
             </div>
             <div class="form-group" data-select2-id="29">
                 <label>Langue</label>
-                <select name="langue" value="{{old('capitale')}}" class="form-control select2 select2-hidden-accessible" style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true">
+                <select name="langue" value="{{old('langue')}}" class="form-control select2 select2-hidden-accessible" style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true">
                   <option selected="selected" data-select2-id="3">FR</option>
                   <option data-select2-id="35">EN</option>
                   <option data-select2-id="36">AR</option>
@@ -64,7 +73,7 @@
             </div>
             <div class="form-group" data-select2-id="29">
                 <label>Est laïque</label>
-                <select name="est_laique" value="{{old('capitale')}}" class="form-control select2 select2-hidden-accessible" style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true">
+                <select name="est_laique" value="{{old('est_laique')}}" class="form-control select2 select2-hidden-accessible" style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true">
                   <option selected="selected" data-select2-id="3">0</option>
                   <option data-select2-id="35">1</option>
                 </select>
