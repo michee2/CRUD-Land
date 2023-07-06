@@ -17,6 +17,8 @@ use App\Http\Controllers\LandController;
 
 Route::view('/', 'index');
 
+Route::redirect('/', '/lists');
+
 Route::get('/lists', [LandController::class, 'index'])->name('list');
 
 Route::get('/add', [LandController::class, 'create'])->name('add');
